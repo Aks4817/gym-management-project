@@ -1,0 +1,15 @@
+{
+    "sqltools.connections": [
+        {
+            "previewLimit": 50,
+            "server": "localhost",
+            "port": 5432,
+            "driver": "PostgreSQL",
+            "name": "gym",
+            "database": "gym-manager",
+            "username": "postgres",
+            "password": "newpass",
+            "connectionTimeout": 30
+        }
+    ]
+}
