@@ -1,10 +1,10 @@
 -- Retrieve the names of members who have not made any payments
 SELECT first_name, last_name
 FROM Member
-WHERE member_id NOT IN (SELECT member_id FROM Membership WHERE payment_status = TRUE);
+WHERE member_id IN (SELECT member_id FROM Membership WHERE payment_status = FALSE);
 
 -- Calculate the total duration of workouts for each member in minutes
-SELECT m.first_name, m.last_name, COALESCE(SUM(w.duration_minutes), 0) AS total_duration_minutes
+SELECT m.first_name, m.last_name, SUM(w.duration_minutes) AS total_duration_minutes
 FROM Member m
 LEFT JOIN Workout w ON m.member_id = w.member_id
 GROUP BY m.member_id;
@@ -41,16 +41,6 @@ FROM Exercise
 GROUP BY type
 ORDER BY exercise_count DESC
 LIMIT 5;
-
--- Calculate the total revenue generated from payments made in the current year
-SELECT SUM(amount) AS total_revenue
-FROM Payment
-WHERE EXTRACT(YEAR FROM payment_date) = EXTRACT(YEAR FROM CURRENT_DATE);
-
--- List the members who have registered before the age of 25
-SELECT first_name, last_name
-FROM Member
-WHERE date_of_birth > CURRENT_DATE - INTERVAL '25 years';
 
 -- Retrieve the membership details of members whose monthly fee is higher than the average monthly fee
 SELECT m.*, ms.*
